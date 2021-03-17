@@ -79,9 +79,6 @@ export default {
     const months = number >= month && number < year;
     const years = number >= year;
 
-    console.log(number);
-    console.log(number / 60 / 60 / 24 / 30);
-
     if (seconds) {
       return `${number} seconds`;
     } else if (minutes) {

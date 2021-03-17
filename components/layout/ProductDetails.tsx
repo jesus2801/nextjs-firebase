@@ -1,6 +1,7 @@
 import React from 'react';
 import { ProductLayout } from '../../interfaces';
 import Styles from '../../styles/components/layout/ProductsPreview';
+import Link from 'next/link';
 
 import helpers from '../../functions/index';
 
@@ -8,30 +9,16 @@ const ProductDetails = ({ product }: { product: ProductLayout }) => {
   const {
     category,
     comments,
-    company,
     created,
     description,
-    hearts,
     id,
     image,
     name,
-    price,
-    url,
-    user,
     votes,
   } = product;
 
   const date = helpers.convertToDate(Date.now() - created);
-  /*
-    categoria,
-    numero de comentarios,
-    creado hace,
-    descripcion,
-    id,
-    image,
-    name,
-    votes,
-  */
+
   return (
     <Styles.ProductPreview>
       <div className="main">
@@ -41,7 +28,9 @@ const ProductDetails = ({ product }: { product: ProductLayout }) => {
         ></div>
 
         <div className="info">
-          <h2>{name}</h2>
+          <Link href="/products/[id]" as={`/products/${id}`}>
+            <h2>{name}</h2>
+          </Link>
 
           <p className="desc">{description}</p>
           <div className="comments">
@@ -53,7 +42,7 @@ const ProductDetails = ({ product }: { product: ProductLayout }) => {
       </div>
       <div className="right">
         <div className="votes">
-          <span className="image"></span>
+          <img src="/static/icons/vote.png" alt="Vote icon" />
           <p>{votes}</p>
         </div>
 

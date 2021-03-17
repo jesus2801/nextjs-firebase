@@ -7,11 +7,11 @@ export interface Product extends ProductState {
   user: string;
   comments: string[];
   image: string;
-  created: Date | number;
+  created: number;
   hearts: number;
 }
 
-export interface ProductLayout extends ProductState {
+export interface ProductLayout extends Product {
   id: string;
 }
 

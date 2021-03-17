@@ -54,6 +54,7 @@ export default {
           text-transform: uppercase;
           margin-bottom: 10px;
           font-size: 26px;
+          cursor: pointer;
           &::after {
             content: '';
             display: block;
@@ -97,6 +98,30 @@ export default {
 
     .right {
       width: 10%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .votes {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: ${blue};
+        margin-bottom: 20px;
+        img {
+          width: 24px;
+          transform: rotate(-90deg);
+        }
+        p {
+          color: #fff;
+          text-align: center;
+        }
+      }
     }
   `,
 };
