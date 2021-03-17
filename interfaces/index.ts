@@ -1,10 +1,21 @@
-// You can include shared interfaces/types in a separate file
-// and then use them in any component by importing them. For
-// example, to import the interface below do:
-//
-// import { User } from 'path/to/interfaces';
+import { ProductState } from './states';
+import firebase from 'firebase';
+import { Firebase } from '../firebase/firebase';
 
-export type User = {
-  id: number
-  name: string
+export interface Product extends ProductState {
+  votes: number;
+  user: string;
+  comments: string[];
+  image: string;
+  created: Date | number;
+  hearts: number;
+}
+
+export interface ProductLayout extends ProductState {
+  id: string;
+}
+
+export interface FirebaseCtx {
+  user: firebase.User;
+  firebase: Firebase;
 }
