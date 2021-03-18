@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, FormEvent } from 'react';
-import { useRouter } from 'next/router';
+import router from 'next/router';
 import Swal from 'sweetalert2';
 import { v4 } from 'uuid';
 
@@ -19,10 +19,12 @@ import { FirebaseContext } from '../firebase';
 import Styles from '../styles/components/out/Forms';
 import FormTextarea from '../components/UI/FormTextarea';
 import validate from '../functions/validate';
+import withAuth from '../functions/withAuth';
 
 const NewProduct = () => {
   //image file state
   const [image, setImage]: any = useState(null);
+  const [blobImage, setBlobImage]: any = useState(null);
 
   //initial state of component
   const INIT_STATE: ProductState = {
@@ -39,9 +41,6 @@ const NewProduct = () => {
 
   //firebase context
   const { user, firebase }: FirebaseCtx = useContext(FirebaseContext);
-
-  //routing state
-  const Router = useRouter();
 
   //use the validate hook
   const {
@@ -61,7 +60,26 @@ const NewProduct = () => {
   }, [submitForm]);
 
   // destructuring values of state
-  const { name, company, url, description, price, category } = values;
+  const {
+    name,
+    company,
+    url,
+    description,
+    price,
+    category,
+  }: ProductState = values;
+
+  useEffect(() => {
+    const imageElement: HTMLImageElement = document.getElementById(
+      'imagePreview'
+    ) as HTMLImageElement;
+    if (blobImage) {
+      const urlCreator = window.URL || window.webkitURL;
+      imageElement.src = urlCreator.createObjectURL(blobImage);
+    } else {
+      imageElement.src = '';
+    }
+  }, [blobImage]);
 
   useEffect(() => {
     const fieldSets = document.querySelectorAll('form fieldset')!;
@@ -115,6 +133,9 @@ const NewProduct = () => {
       //start uploading product
       helpers.handleLoading(true, 'Uploading product');
 
+      console.log(description);
+      console.log(description.replace(/\n/g, ''));
+
       //TODO: poner este componente en privado
       const newProduct: Product = {
         name,
@@ -122,13 +143,13 @@ const NewProduct = () => {
         url,
         user: user.uid,
         image: imageUrl,
-        description,
+        description: description.replace(/\n/g, ' '),
         price,
         category,
-        votes: 0,
+        votes: [],
         comments: [],
         created: Date.now(),
-        hearts: 0,
+        hearts: [],
       };
 
       // uploading product to firebase
@@ -136,7 +157,7 @@ const NewProduct = () => {
       helpers.handleLoading(false);
 
       //success product uploaded
-      helpers.productCreated(Router);
+      helpers.productCreated(router);
     } catch (e) {
       //failed product uploaded
       helpers.handleLoading(false);
@@ -150,6 +171,7 @@ const NewProduct = () => {
     ) as HTMLParagraphElement;
     const input: HTMLInputElement = e.currentTarget;
     const file: File = input.files![0];
+    const blob: Blob = new Blob([file], { type: file.type });
 
     if (file.size > 3000000) {
       Swal.fire(
@@ -159,6 +181,7 @@ const NewProduct = () => {
       );
       fileText.innerText = 'No file selected';
       input.value = '';
+      setBlobImage(null);
       setImage(null);
       return;
     }
@@ -171,21 +194,23 @@ const NewProduct = () => {
       );
       fileText.innerText = 'No file selected';
       input.value = '';
+      setBlobImage(null);
       setImage(null);
       return;
     }
 
     fileText.innerText = file.name;
+    setBlobImage(blob);
     setImage(file);
   };
 
   //the html that is render on user screen
   return (
     <Layout>
-      <h2>NEW PRODUCT</h2>
+      <Styles.NewProductTitle>NEW PRODUCT</Styles.NewProductTitle>
       <form onSubmit={handleSubmit}>
         <Styles.FieldSet>
-          <legend>About Product Creator</legend>
+          <legend>General information</legend>
 
           <FormInput
             name="name"
@@ -193,6 +218,8 @@ const NewProduct = () => {
             handleChange={handleChange}
             type="text"
             value={name}
+            placeholder="Enter your product name"
+            maxLength="50"
           />
 
           <FormInput
@@ -201,6 +228,7 @@ const NewProduct = () => {
             handleChange={handleChange}
             type="text"
             value={company}
+            maxLength="50"
           />
 
           <FormFileInput
@@ -208,12 +236,15 @@ const NewProduct = () => {
             accept="image/*"
           />
 
+          <Styles.ImgPreview src="" id="imagePreview" />
+
           <FormInput
             name="url"
             label="URL"
             handleChange={handleChange}
             type="text"
             value={url}
+            maxLength="290"
           />
 
           <Styles.Submit
@@ -228,7 +259,7 @@ const NewProduct = () => {
         </Styles.FieldSet>
 
         <Styles.FieldSet disabled>
-          <legend>About Your Product</legend>
+          <legend>Main information</legend>
 
           <FormTextarea
             name="description"
@@ -236,6 +267,7 @@ const NewProduct = () => {
             handleChange={handleChange}
             type="textarea"
             value={description}
+            maxLength="210"
           />
 
           <FormInput
@@ -244,6 +276,7 @@ const NewProduct = () => {
             handleChange={handleChange}
             type="number"
             value={price}
+            max="99999999999"
           />
 
           <FormInput
@@ -252,6 +285,7 @@ const NewProduct = () => {
             handleChange={handleChange}
             type="text"
             value={category}
+            maxLength={25}
           />
 
           <Styles.Submit type="submit" onClick={helpers.createRipple}>
@@ -263,4 +297,4 @@ const NewProduct = () => {
   );
 };
 
-export default NewProduct;
+export default withAuth(NewProduct);

@@ -3,12 +3,12 @@ import firebase from 'firebase';
 import { Firebase } from '../firebase/firebase';
 
 export interface Product extends ProductState {
-  votes: number;
+  votes: string[];
   user: string;
   comments: string[];
   image: string;
   created: number;
-  hearts: number;
+  hearts: string[];
 }
 
 export interface ProductLayout extends Product {

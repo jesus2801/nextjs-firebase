@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import { MouseEvent } from 'react';
 import { NextRouter } from 'next/router';
 
 const minute = 60;
@@ -8,7 +9,7 @@ const month = day * 30;
 const year = month * 12;
 
 export default {
-  createRipple: function (e: any) {
+  createRipple: function (e: MouseEvent<HTMLButtonElement>) {
     const button: HTMLElement = e.currentTarget;
 
     const circle: HTMLSpanElement = document.createElement('span');
@@ -80,7 +81,7 @@ export default {
     const years = number >= year;
 
     if (seconds) {
-      return `${number} seconds`;
+      return `${Math.floor(number)} seconds`;
     } else if (minutes) {
       return `${Math.floor(number / minute)} minutes`;
     } else if (hours) {

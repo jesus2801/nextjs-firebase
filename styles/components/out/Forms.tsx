@@ -2,6 +2,17 @@ import styled from '@emotion/styled';
 import { black, blue } from '../index';
 
 export default {
+  ImgPreview: styled.img`
+    max-width: 100%;
+  `,
+
+  NewProductTitle: styled.h2`
+    text-align: center;
+    color: ${black};
+    font-size: 40px;
+    margin-bottom: 30px;
+  `,
+
   Form: styled.form`
     width: 94%;
     max-width: 450px;

@@ -20,6 +20,7 @@ export default {
     justify-content: center;
     list-style: none;
     padding: 20px;
+    margin-bottom: 20px;
     background-color: #fff;
 
     -webkit-box-shadow: 1px 4px 4px 0px rgba(207, 207, 207, 1);
@@ -35,7 +36,9 @@ export default {
 
       .foto {
         width: 180px;
+        min-width: 180px;
         height: 180px;
+        min-height: 180px;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -43,6 +46,7 @@ export default {
       }
 
       .info {
+        width: calc(100% - 180px);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -69,6 +73,9 @@ export default {
           color: #363636;
           font-size: 14px;
           margin-bottom: 10px;
+          width: 100%;
+          max-width: 100%;
+          text-overflow: ellipsis;
         }
 
         .comments {
@@ -102,6 +109,9 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      p {
+        text-align: center;
+      }
       .votes {
         width: 64px;
         height: 64px;

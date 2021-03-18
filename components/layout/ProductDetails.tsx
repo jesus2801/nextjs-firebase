@@ -43,7 +43,7 @@ const ProductDetails = ({ product }: { product: ProductLayout }) => {
       <div className="right">
         <div className="votes">
           <img src="/static/icons/vote.png" alt="Vote icon" />
-          <p>{votes}</p>
+          <p>{votes.length}</p>
         </div>
 
         <p>{category}</p>
