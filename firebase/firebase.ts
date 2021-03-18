@@ -41,8 +41,6 @@ export class Firebase {
 
   public async signInGoogle(): Promise<void> {
     const response = await this.auth.signInWithPopup(this.googleProvider);
-    console.log(response.credential);
-    console.log(response.user);
   }
 
   public async signInFacebook(): Promise<void> {

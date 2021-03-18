@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  ChangeEvent,
+  FormEvent,
+} from 'react';
 import { useRouter } from 'next/router';
 
 import helpers from '../../functions';
@@ -14,6 +20,7 @@ import Swal from 'sweetalert2';
 const Product = () => {
   //component states
   const [product, setProduct]: any = useState({});
+  const [comment, setComment]: any = useState({});
 
   //router state
   const router = useRouter();
@@ -52,20 +59,17 @@ const Product = () => {
     name,
     votes,
     url,
-    // user,
+    user: creatorId,
+    fullPath,
     hearts,
     company,
     price,
   }: ProductLayout = product;
 
-  /*
-    url,
-    user, *
-  */
-
   const voteProduct = () => {
     if (!user) {
       router.push('/login');
+      return;
     }
 
     if (votes.includes(user.uid)) {
@@ -101,6 +105,7 @@ const Product = () => {
   const heartToProduct = () => {
     if (!user) {
       router.push('/login');
+      return;
     }
 
     if (hearts.includes(user.uid)) {
@@ -133,6 +138,100 @@ const Product = () => {
     });
   };
 
+  //functions for comment
+  const commentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setComment({
+      ...comment,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const isCreator = (id: string) => id === creatorId;
+
+  const addComment = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const textarea = document.querySelector(
+      'textarea[name="message"]'
+    ) as HTMLTextAreaElement;
+
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+
+    if (textarea.value.trim() === '') {
+      Swal.fire(
+        'Error!',
+        'Please, cannot send an empty comment',
+        'error'
+      );
+      return;
+    }
+
+    //extra info
+    comment.userID = user.uid;
+    comment.userName = user.displayName;
+
+    //take copy of comment
+    const newComments = [...comments, comment];
+
+    //update db
+    firebase.db
+      .collection('products')
+      .doc(id as string)
+      .update({ comments: newComments })
+      .then(() => {
+        Swal.fire(
+          'Comment posted!',
+          'Your comment has been published successfully',
+          'success'
+        );
+      })
+      .catch(() => {
+        Swal.fire(
+          'Error!',
+          "Sorry, we couldn't upload your comment, please try again later",
+          'error'
+        );
+      });
+
+    //update state
+    setProduct({
+      ...product,
+      comments: newComments,
+    });
+
+    textarea.value = '';
+  };
+
+  const deleteProduct = async () => {
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+    if (user.uid !== creatorId) {
+      router.push('/');
+      return;
+    }
+    helpers.handleLoading(true);
+    try {
+      await firebase.db
+        .collection('products')
+        .doc(id as string)
+        .delete();
+      await firebase.storageRef.child(fullPath).delete();
+      helpers.handleLoading(false);
+      router.push('/');
+    } catch (e) {
+      Swal.fire(
+        'Error!',
+        'Sorry, we were unable to remove your product, please try again later',
+        'error'
+      );
+    }
+  };
+
   return (
     <Layout>
       <Styles.Title>{name}</Styles.Title>
@@ -143,8 +242,12 @@ const Product = () => {
             <>
               <h2>Add your comment</h2>
 
-              <form>
-                <textarea placeholder="Enter your comment"></textarea>
+              <form onSubmit={addComment}>
+                <textarea
+                  placeholder="Enter your comment"
+                  onChange={commentChange}
+                  name="message"
+                ></textarea>
                 <ExtraStyles.Submit
                   type="submit"
                   onClick={helpers.createRipple}
@@ -156,11 +259,25 @@ const Product = () => {
           )}
 
           <h2>Comments</h2>
+
+          <ul>
+            {comments
+              ? comments.map((comment, i) => (
+                  <li key={i}>
+                    <p className="message">{comment.message}</p>
+                    <p className="creator">
+                      <b>Publicado por:</b> {comment.userName}
+                      {isCreator(comment.userID) && <b> - Creator</b>}
+                    </p>
+                  </li>
+                ))
+              : null}
+          </ul>
         </Styles.Image>
         <Styles.InfoCtn>
           <p className="created">
-            created {helpers.convertToDate(Date.now() - created)} ago - by
-            USERNAME from {company}
+            created {helpers.convertToDate(Date.now() - created)} ago -
+            from {company}
           </p>
           <div className="info">
             <p>
@@ -175,11 +292,11 @@ const Product = () => {
               <b>Price:</b> {price}
             </p>
 
-            <div>
-              <b>URL:</b>{' '}
-              {/* <a href={url} target="_blank">
+            <div className="link">
+              <b>URL: </b>{' '}
+              <a href={url} target="_blank">
                 {url}
-              </a> */}
+              </a>
             </div>
           </div>
           <div className="buttons">
@@ -228,6 +345,26 @@ const Product = () => {
           </div>
         </Styles.InfoCtn>
       </Styles.ProductCtn>
+      {user && isCreator(user.uid) && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: '30px',
+          }}
+        >
+          <ExtraStyles.Submit
+            onClick={e => {
+              helpers.createRipple(e);
+              deleteProduct();
+            }}
+            style={{ width: '90%' }}
+          >
+            Delete Project
+          </ExtraStyles.Submit>
+        </div>
+      )}
     </Layout>
   );
 };

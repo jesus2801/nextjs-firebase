@@ -9,6 +9,9 @@ export default {
     text-transform: uppercase;
     color: ${black};
     font-size: 40px;
+    @media (max-width: 600px) {
+      font-size: 30px;
+    }
   `,
 
   InfoCtn: styled.div`
@@ -25,11 +28,25 @@ export default {
         font-size: 15px;
         color: ${black};
       }
+      .link {
+        margin: 20px 0;
+        display: flex;
+        flex-direction: row;
+        b {
+          font-size: 15px;
+          color: ${black};
+        }
+        a {
+          font-size: 15px;
+        }
+      }
     }
 
     .created {
       color: ${black};
       font-size: 14px;
+      text-align: center;
+      margin: 0 auto;
     }
 
     .buttons {
@@ -43,9 +60,13 @@ export default {
     margin: 0 auto;
     display: grid;
     grid-template-columns: 58% 42%;
+    @media (max-width: 900px) {
+      grid-template-columns: 100%;
+    }
   `,
 
   Image: styled.div`
+    width: 100%;
     img {
       width: 100%;
     }
@@ -72,6 +93,26 @@ export default {
         transition: border 300ms ease;
         &:focus {
           border: 1px solid ${blue};
+        }
+      }
+    }
+
+    ul {
+      margin: 20px 0;
+      li {
+        padding: 25px 0;
+        border-bottom: 1px solid #dddddd;
+        &::marker {
+          color: ${blue};
+        }
+        .message {
+          font-size: 15px;
+          margin-bottom: 8px;
+          color: ${black};
+        }
+        .creator {
+          font-size: 13px;
+          color: ${black};
         }
       }
     }

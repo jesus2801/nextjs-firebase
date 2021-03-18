@@ -133,9 +133,6 @@ const NewProduct = () => {
       //start uploading product
       helpers.handleLoading(true, 'Uploading product');
 
-      console.log(description);
-      console.log(description.replace(/\n/g, ''));
-
       //TODO: poner este componente en privado
       const newProduct: Product = {
         name,
@@ -144,6 +141,7 @@ const NewProduct = () => {
         user: user.uid,
         image: imageUrl,
         description: description.replace(/\n/g, ' '),
+        fullPath: response.metadata.fullPath,
         price,
         category,
         votes: [],

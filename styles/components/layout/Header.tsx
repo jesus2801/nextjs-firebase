@@ -8,6 +8,9 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    @media (max-width: 900px) {
+      width: 90%;
+    }
   `,
 
   Header: styled.header`
@@ -22,6 +25,18 @@ export default {
     -webkit-box-shadow: 0px 3px 4px 0px rgba(217, 217, 217, 1);
     -moz-box-shadow: 0px 3px 4px 0px rgba(217, 217, 217, 1);
     box-shadow: 0px 3px 4px 0px rgba(217, 217, 217, 1);
+
+    @media (max-width: 900px) {
+      position: fixed;
+      top: 0;
+      width: 280px;
+      background-color: #fff;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      z-index: 9;
+    }
   `,
 
   Nav: styled.nav`
@@ -53,6 +68,17 @@ export default {
 
     a:not(:last-child) {
       margin-right: 30px;
+    }
+
+    @media (max-width: 900px) {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      a {
+        margin: 0 0 15px 0;
+      }
     }
   `,
 
@@ -88,6 +114,13 @@ export default {
       &:first-of-type {
         margin-right: 20px;
         background-color: ${black};
+      }
+    }
+    @media (max-width: 900px) {
+      margin-top: 20px;
+      flex-direction: column;
+      p{
+        margin-bottom: 14px;
       }
     }
   `,
