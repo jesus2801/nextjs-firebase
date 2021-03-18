@@ -116,7 +116,6 @@ export default {
         width: 64px;
         height: 64px;
         border-radius: 50%;
-        cursor: pointer;
         display: flex;
         flex-direction: column;
         align-items: center;

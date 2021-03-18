@@ -40,15 +40,11 @@ export class Firebase {
   }
 
   public async signInGoogle(): Promise<void> {
-    const response = await this.auth.signInWithPopup(this.googleProvider);
+    await this.auth.signInWithPopup(this.googleProvider);
   }
 
   public async signInFacebook(): Promise<void> {
-    const response = await this.auth.signInWithPopup(
-      this.facebookProvider
-    );
-    console.log(response.credential);
-    console.log(response.user);
+    await this.auth.signInWithPopup(this.facebookProvider);
   }
 
   public async signOff() {
