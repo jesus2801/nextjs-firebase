@@ -19,3 +19,10 @@
     opacity: 0;
   }
 }
+
+.flex-row {
+  flex-direction: row !important;
+  button {
+    margin-top: 0 !important;
+  }
+}

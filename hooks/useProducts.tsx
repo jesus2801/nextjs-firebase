@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import FirebaseContext from '../firebase/context';
 import helpers from '../functions';
-import { AppCtx, ProductLayout } from '../interfaces';
+import { AppCtx } from '../interfaces';
 
 const useProducts = (order: string) => {
   const [products, setProducts] = useState([]);

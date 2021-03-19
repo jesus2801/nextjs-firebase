@@ -7,7 +7,7 @@ import Styles from '../../styles/components/layout/Header';
 
 const LoginSignupButtons = () => {
   return (
-    <Styles.Buttons>
+    <Styles.Buttons className="flex-row">
       <Link href="/login">
         <button
           type="button"
