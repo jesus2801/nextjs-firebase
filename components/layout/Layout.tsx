@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from './Header';
 import Helmet from 'react-helmet';
+import LoginSignupButtons from '../UI/LoginSignupButtons';
+
+import FirebaseContext from '../../firebase/context';
+
+import Styles from '../../styles/components/layout/Header';
+import { AppCtx } from '../../interfaces';
 
 const Layout = (props: any) => {
+  const handleHeader = () => {
+    document.getElementById('header')!.classList.toggle('ocult');
+    document.querySelector('.dark')!.classList.toggle('ocult');
+  };
+
+  const { user }: AppCtx = useContext(FirebaseContext);
+
   return (
     <>
       <Helmet>
@@ -14,7 +27,15 @@ const Layout = (props: any) => {
           rel="stylesheet"
         />
       </Helmet>
+      <Styles.Dark className="dark ocult"></Styles.Dark>
+      <Styles.Bars
+        src="/static/icons/menu.png"
+        alt="Menu icon"
+        className="bars"
+        onClick={handleHeader}
+      />
       <Header />
+      {!user && <LoginSignupButtons />}
       <main>{props.children}</main>
     </>
   );

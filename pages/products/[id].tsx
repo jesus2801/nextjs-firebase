@@ -9,8 +9,8 @@ import { useRouter } from 'next/router';
 
 import helpers from '../../functions';
 
-import { FirebaseContext } from '../../firebase';
-import { FirebaseCtx, ProductLayout } from '../../interfaces';
+import FirebaseContext from '../../firebase/context';
+import { AppCtx, ProductLayout } from '../../interfaces';
 
 import Layout from '../../components/layout/Layout';
 import Styles from '../../styles/components/layout/Product';
@@ -29,7 +29,7 @@ const Product = () => {
   } = router;
 
   //firebase context
-  const { firebase, user }: FirebaseCtx = useContext(FirebaseContext);
+  const { firebase, user }: AppCtx = useContext(FirebaseContext);
 
   useEffect(() => {
     if (id) {

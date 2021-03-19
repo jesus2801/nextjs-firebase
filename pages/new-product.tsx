@@ -11,10 +11,10 @@ import helpers from '../functions/index';
 import useValidate from '../hooks/useValidate';
 
 import { ProductState } from '../interfaces/states';
-import { FirebaseCtx, Product } from '../interfaces';
+import { AppCtx, Product } from '../interfaces';
 
 import validateProduct from '../validation/validateProduct';
-import { FirebaseContext } from '../firebase';
+import FirebaseContext from '../firebase/context';
 
 import Styles from '../styles/components/out/Forms';
 import FormTextarea from '../components/UI/FormTextarea';
@@ -40,7 +40,7 @@ const NewProduct = () => {
   const [next, setNext] = useState(false);
 
   //firebase context
-  const { user, firebase }: FirebaseCtx = useContext(FirebaseContext);
+  const { user, firebase }: AppCtx = useContext(FirebaseContext);
 
   //use the validate hook
   const {
@@ -265,7 +265,7 @@ const NewProduct = () => {
             handleChange={handleChange}
             type="textarea"
             value={description}
-            maxLength="210"
+            maxLength={210}
           />
 
           <FormInput

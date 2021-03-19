@@ -2,6 +2,32 @@ import styled from '@emotion/styled';
 import { black, blue } from '../index';
 
 export default {
+  Dark: styled.div`
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 7;
+    transition: all 1s ease;
+    &.ocult {
+      opacity: 0;
+      visibility: hidden;
+    }
+  `,
+  Bars: styled.img`
+    position: fixed;
+    width: 27px;
+    top: 5px;
+    left: 10px;
+    cursor: pointer;
+    display: none;
+    z-index: 10;
+
+    @media (max-width: 900px) {
+      display: block;
+    }
+  `,
   MainZone: styled.div`
     width: 30%;
     display: flex;
@@ -10,6 +36,7 @@ export default {
     justify-content: center;
     @media (max-width: 900px) {
       width: 90%;
+      margin-top: 30px;
     }
   `,
 
@@ -21,6 +48,7 @@ export default {
     justify-content: space-around;
     padding: 10px 0;
     margin-bottom: 20px;
+    transition: transform 1s ease;
 
     -webkit-box-shadow: 0px 3px 4px 0px rgba(217, 217, 217, 1);
     -moz-box-shadow: 0px 3px 4px 0px rgba(217, 217, 217, 1);
@@ -36,6 +64,10 @@ export default {
       justify-content: flex-start;
       align-items: center;
       z-index: 9;
+
+      &.ocult {
+        transform: translateX(-280px);
+      }
     }
   `,
 
@@ -93,6 +125,11 @@ export default {
       font-weight: 300;
     }
 
+    .second {
+      display: none;
+      margin-top: 30px;
+    }
+
     button {
       border: none;
       outline: none;
@@ -117,10 +154,16 @@ export default {
       }
     }
     @media (max-width: 900px) {
-      margin-top: 20px;
       flex-direction: column;
-      p{
-        margin-bottom: 14px;
+      margin-top: 50px;
+      p {
+        margin-bottom: 20px;
+      }
+      .first {
+        display: none;
+      }
+      .second {
+        display: block;
       }
     }
   `,

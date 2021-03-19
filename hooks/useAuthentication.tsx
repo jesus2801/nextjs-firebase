@@ -1,15 +1,24 @@
-import { useState, useEffect } from 'react';
-import firebase from '../firebase';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import firebase from '../firebase/firebase';
+import fb from 'firebase';
 
 const useAuthentication = () => {
-  const [userAuthenticate, setUserAuthenticate]: any = useState(null);
+  const [userAuthenticate, setUserAuthenticate]: [
+    null | fb.User,
+    Dispatch<SetStateAction<null | fb.User>>
+  ] = useState(null) as [
+    null | fb.User,
+    Dispatch<SetStateAction<null | fb.User>>
+  ];
 
   useEffect(() => {
     const unSuscribe = firebase.auth.onAuthStateChanged(async user => {
       if (user) {
-        return setUserAuthenticate(user);
+        setUserAuthenticate(user);
+        return;
       } else {
-        return setUserAuthenticate(null);
+        setUserAuthenticate(null);
+        return;
       }
     });
     return () => unSuscribe();

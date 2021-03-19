@@ -7,7 +7,7 @@ const FormTextarea = ({
   handleChange,
   label,
   ...rest
-}: any) => {
+}: any) => { 
   return (
     <Styles.FormGroup>
       <label htmlFor={name}>{label}:</label>

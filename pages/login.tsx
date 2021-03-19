@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 
@@ -9,15 +9,18 @@ import useValidate from '../hooks/useValidate';
 
 import { LoginState } from '../interfaces/states';
 import validateLogin from '../validation/validateLogin';
-import firebase from '../firebase';
+import FirebaseContext from '../firebase/context';
 
 import Styles from '../styles/components/out/Forms';
 import ContinueButtons from '../components/UI/ContinueButtons';
 import FormInput from '../components/UI/FormInput';
+import { AppCtx } from '../interfaces';
 
 const Login = () => {
   //routings hook
   const Router = useRouter();
+
+  const { firebase }: AppCtx = useContext(FirebaseContext);
 
   //initial state of component
   const INIT_STATE: LoginState = {

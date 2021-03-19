@@ -132,5 +132,27 @@ export default {
         }
       }
     }
+    @media (max-width: 740px) {
+      flex-direction: column;
+      .right {
+        margin-top: 20px;
+      }
+    }
+    @media (max-width: 540px) {
+      .main {
+        flex-direction: column;
+        .foto {
+          margin: 0;
+          width: 260px;
+          min-width: 260px;
+          height: 260px;
+          min-height: 260px;
+        }
+        .info {
+          margin-top: 20px;
+          width: 100%;
+        }
+      }
+    }
   `,
 };

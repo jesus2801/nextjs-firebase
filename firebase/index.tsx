@@ -2,10 +2,11 @@ import React from 'react';
 import firebase from './firebase';
 import FirebaseContext from './context';
 import useAuthentication from '../hooks/useAuthentication';
+import { NextComponentType, NextPageContext } from 'next';
 
-export { FirebaseContext };
-
-export const UseAppContext = ({ children }: any) => {
+const UseAppContext: NextComponentType<NextPageContext> = ({
+  children,
+}) => {
   const user = useAuthentication();
 
   return (
@@ -20,4 +21,4 @@ export const UseAppContext = ({ children }: any) => {
   );
 };
 
-export default firebase;
+export default UseAppContext;

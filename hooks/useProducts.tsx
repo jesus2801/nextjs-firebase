@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
-import { FirebaseContext } from '../firebase';
+import FirebaseContext from '../firebase/context';
 import helpers from '../functions';
-import { FirebaseCtx } from '../interfaces';
+import { AppCtx, ProductLayout } from '../interfaces';
 
 const useProducts = (order: string) => {
   const [products, setProducts] = useState([]);
 
-  const { firebase }: FirebaseCtx = useContext(FirebaseContext);
+  const { firebase }: AppCtx = useContext(FirebaseContext);
 
   useEffect(() => {
     helpers.handleLoading(true);

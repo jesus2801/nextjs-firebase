@@ -1,4 +1,4 @@
-import React, { FocusEvent, useState } from 'react';
+import React, { FocusEvent, useState, KeyboardEvent } from 'react';
 import Logo from './Logo';
 import Styles from '../../styles/components/layout/Header';
 import Router from 'next/router';
@@ -12,8 +12,12 @@ const Search = () => {
 
   const [search, setSearch] = useState('');
 
-  const hadleSubmit = () => {
+  const hadleSubmit = (
+    e: FocusEvent<HTMLInputElement> | KeyboardEvent<HTMLInputElement>
+  ) => {
     if (search.trim() === '') return;
+
+    e.currentTarget.value = '';
 
     Router.push({
       pathname: '/search',
@@ -33,12 +37,12 @@ const Search = () => {
           onFocus={handleInputFocus}
           onBlur={e => {
             handleInputFocus(e);
-            hadleSubmit();
+            hadleSubmit(e);
           }}
           onChange={e => setSearch(e.target.value)}
           onKeyDown={e => {
             if (e.key.toLowerCase() === 'enter') {
-              hadleSubmit();
+              hadleSubmit(e);
             }
           }}
         />

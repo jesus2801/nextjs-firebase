@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Link from 'next/link';
-import { FirebaseContext } from '../../firebase';
+import FirebaseContext from '../../firebase/context';
 
 import Search from '../UI/Search';
 import Nav from './Nav';
@@ -12,7 +12,7 @@ const Header = () => {
   const { firebase, user } = useContext(FirebaseContext);
 
   return (
-    <Styles.Header>
+    <Styles.Header id="header" className="ocult">
       <Search />
       <Nav />
       <Styles.Buttons>
@@ -35,7 +35,7 @@ const Header = () => {
               <button
                 type="button"
                 onClick={helpers.createRipple}
-                className="button-auth"
+                className="button-auth first"
               >
                 Login
               </button>
@@ -45,7 +45,7 @@ const Header = () => {
               <button
                 type="button"
                 onClick={helpers.createRipple}
-                className="button-auth"
+                className="button-auth first"
               >
                 Signup
               </button>

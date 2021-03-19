@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Link from 'next/link';
 import Styles from '../../styles/components/layout/Header';
 
-import { FirebaseContext } from '../../firebase';
+import FirebaseContext from '../../firebase/context';
 
 const Nav = () => {
   const { user } = useContext(FirebaseContext);

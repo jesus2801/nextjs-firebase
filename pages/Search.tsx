@@ -6,6 +6,7 @@ import { Product, ProductLayout } from '../interfaces';
 import ProductDetails from '../components/layout/ProductDetails';
 
 import Styles from '../styles/components/layout/ProductsPreview';
+import ExtraStyles from '../styles/components/layout/Main';
 
 import useProducts from '../hooks/useProducts';
 
@@ -29,6 +30,8 @@ const Search = () => {
           product.description.toLowerCase().indexOf(search) >= 0
         );
       });
+      document.getElementById('header')!.classList.add('ocult');
+      document.querySelector('.dark')!.classList.add('ocult');
       setResults(filter);
     }
   }, [q, products]);
@@ -36,9 +39,13 @@ const Search = () => {
   return (
     <Layout>
       <Styles.ProductsPreviewCtn>
-        {results.map((product: ProductLayout) => (
-          <ProductDetails key={product.id} product={product} />
-        ))}
+        {results.length === 0 ? (
+          <ExtraStyles.NotFound>NO PRODUCT FOUND</ExtraStyles.NotFound>
+        ) : (
+          results.map((product: ProductLayout) => (
+            <ProductDetails key={product.id} product={product} />
+          ))
+        )}
       </Styles.ProductsPreviewCtn>
     </Layout>
   );

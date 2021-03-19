@@ -22,7 +22,7 @@ export interface ProductLayout extends Product {
   id: string;
 }
 
-export interface FirebaseCtx {
+export interface AppCtx {
   user: firebase.User;
   firebase: Firebase;
 }

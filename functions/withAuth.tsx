@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { FirebaseContext } from '../firebase';
-import { FirebaseCtx } from '../interfaces';
+import FirebaseContext from '../firebase/context';
+import { AppCtx } from '../interfaces';
 import Login from '../pages/login';
 
 const withAuth = (Component: any) => {
   const Auth = (props: any) => {
-    const { user }: FirebaseCtx = useContext(FirebaseContext);
+    const { user }: AppCtx = useContext(FirebaseContext);
     if (!user) {
       return <Login />;
     }

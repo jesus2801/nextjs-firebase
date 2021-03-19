@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app';
-import { UseAppContext } from '../firebase';
+import UseAppContext from '../firebase/index';
 
 import '../styles/globals.scss';
 

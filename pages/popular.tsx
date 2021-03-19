@@ -9,12 +9,20 @@ import ProductDetails from '../components/layout/ProductDetails';
 import Styles from '../styles/components/layout/ProductsPreview';
 
 const Popular = () => {
-  const { products } = useProducts('votes');
+  const { products }: any = useProducts('votes');
+
+  const results = products.sort((a: any, b: any) => {
+    if (a.votes.length < b.votes.length) return 1;
+
+    if (a.votes.length > b.votes.length) return -1;
+
+    return 0;
+  });
 
   return (
     <Layout>
       <Styles.ProductsPreviewCtn>
-        {products.map((product: ProductLayout) => (
+        {results.map((product: ProductLayout) => (
           <ProductDetails key={product.id} product={product} />
         ))}
       </Styles.ProductsPreviewCtn>

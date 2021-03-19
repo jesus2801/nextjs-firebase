@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Router from 'next/router';
 import Swal from 'sweetalert2';
 
@@ -9,11 +9,12 @@ import useValidate from '../hooks/useValidate';
 
 import { SignupState } from '../interfaces/states';
 import validateSignup from '../validation/validateSignup';
-import firebase from '../firebase';
+import FirebaseContext from '../firebase/context';
 
 import Styles from '../styles/components/out/Forms';
 import ContinueButtons from '../components/UI/ContinueButtons';
 import FormInput from '../components/UI/FormInput';
+import { AppCtx } from '../interfaces';
 
 const Signup = () => {
   //initial state of component
@@ -22,6 +23,8 @@ const Signup = () => {
     mail: '',
     password: '',
   };
+
+  const { firebase }: AppCtx = useContext(FirebaseContext);
 
   //use the validate hook
   const {

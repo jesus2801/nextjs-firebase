@@ -9,7 +9,9 @@ const month = day * 30;
 const year = month * 12;
 
 export default {
-  createRipple: function (e: MouseEvent<HTMLButtonElement>) {
+  createRipple: function (
+    e: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLLabelElement>
+  ) {
     const button: HTMLElement = e.currentTarget;
 
     const circle: HTMLSpanElement = document.createElement('span');

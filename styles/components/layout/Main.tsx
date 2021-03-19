@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
 
-import { black } from '../index';
+import { black, blue } from '../index';
 
 export default {
+  NotFound: styled.h2`
+    color: ${blue};
+    text-align: center;
+    margin-top: 40px;
+    font-size: 40px;
+  `,
   Logo: styled.p`
     color: #2d80ff;
     font-weight: 600;

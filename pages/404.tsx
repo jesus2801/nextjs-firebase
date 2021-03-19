@@ -1,10 +1,13 @@
 import React from 'react';
+import Layout from '../components/layout/Layout';
+
+import Styles from '../styles/components/layout/Main';
 
 const NotFound = () => {
   return (
-    <div>
-      <h1>erorr 404</h1>
-    </div>
+    <Layout>
+      <Styles.NotFound>Error 404</Styles.NotFound>
+    </Layout>
   );
 };
 
